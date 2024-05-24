@@ -1,0 +1,38 @@
+[Unit]
+Description=Cloudflared Remote Access Service
+ConditionPathExists=/user/etc/cloudflared-remote-access.env
+After=network-online.target local-fs.target
+StartLimitIntervalSec=0
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+EnvironmentFile=/user/etc/cloudflared-remote-access.env
+Type=forking
+
+KillMode=mixed
+Restart=on-failure
+TimeoutStopSec=30
+RestartSec=10
+
+ExecStartPre=/bin/rm -f %t/container-%N.pid %t/container-%N.ctr-id
+
+ExecStart=/usr/bin/podman run \
+          --conmon-pidfile %t/container-%N.pid \
+          --cidfile %t/container-%N.ctr-id \
+          --detach \
+          --rm \
+          --log-driver=journald \
+          --log-opt=tag="{{.Name}}" \
+          --replace \
+          --network=host \
+          --privileged \
+          --name %N \
+          cloudflared:latest \
+          tunnel --no-autoupdate run --token ${CLOUDFLARED_REMOTE_ACCESS_TOKEN}
+
+ExecStop=/usr/bin/podman stop --ignore --cidfile %t/container-%N.ctr-id -t 10
+
+PIDFile=%t/container-%N.pid
+
+[Install]
+WantedBy=multi-user.target default.target
