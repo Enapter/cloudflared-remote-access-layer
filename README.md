@@ -118,7 +118,7 @@ cloudflared-remote-access-layer/
 ### Build Process
 
 1. **Prepare your USB stick**:
-    - Use [Etcher](https://etcher.balena.io) utility or `dd` Linux utility to flash `.img` image of [Enapter Industrial Linux](https://github.com/Enapter/enapter-industrial-linux/releases/download/v3.0.0-dev1/enapter-linux-v3.0.0-dev1.zip) onto USB stick.
+    - Use [Etcher](https://etcher.balena.io) utility or `dd` Linux utility to flash `.img` image of [Enapter Industrial Linux](https://github.com/Enapter/enapter-industrial-linux/releases/download/v3.0.0-dev1/enapter-industrial-linux-v3.0.0-dev1.zip) onto USB stick.
 
 2. **Create and deploy your layer**:
     - Structure your layer as shown. Please check the `Makefile` in this repository as an example
