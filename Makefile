@@ -32,7 +32,7 @@ build:
 	$(CP) $(PROJECT_ROOT)/files/cloudflared-remote-access.service $(LAYER_TMP_ROOTFS)/usr/lib/systemd/system/cloudflared-remote-access.service
 	$(LN) -s /usr/lib/systemd/system/cloudflared-remote-access.service $(LAYER_TMP_ROOTFS)/etc/systemd/system/default.target.wants/cloudflared-remote-access.service
 	$(LN) -s /usr/lib/systemd/system/cloudflared-remote-access.service $(LAYER_TMP_ROOTFS)/etc/systemd/system/multi-user.target.wants/cloudflared-remote-access.service
-	$(MKSQUASHFS) $(LAYER_TMP) $(LAYER_PATH) -noappend -comp lzo -all-root
+	$(MKSQUASHFS) $(LAYER_TMP) $(LAYER_PATH) -noappend -comp lzo
 
 .PHONY: build
 
